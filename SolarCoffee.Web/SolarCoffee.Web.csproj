@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Serialization" />
-    <Folder Include="ViewModels" />
   </ItemGroup>
 
 

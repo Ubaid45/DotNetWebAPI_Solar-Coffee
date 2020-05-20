@@ -16,7 +16,7 @@ namespace SolarCoffee.Web.Controllers {
             _logger = logger;
         }
 
-        [HttpPost("/api/customer")]
+        [HttpPost("/api/customers")]
         public ActionResult CreateCustomer([FromBody] CustomerModel customer) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
@@ -29,7 +29,7 @@ namespace SolarCoffee.Web.Controllers {
             return Ok(newCustomer);
         }
 
-        [HttpGet("/api/customer")]
+        [HttpGet("/api/customers")]
         public ActionResult GetCustomers() {
             _logger.LogInformation("Getting customers");
             var customers = _customerService.GetAllCustomers();
@@ -50,7 +50,7 @@ namespace SolarCoffee.Web.Controllers {
             return Ok(customerModels);
         }
         
-        [HttpDelete("/api/customer/{id}")]
+        [HttpDelete("/api/customers/{id}")]
         public ActionResult DeleteCustomer(int id) {
             _logger.LogInformation("Deleting a customer");
             var response = _customerService

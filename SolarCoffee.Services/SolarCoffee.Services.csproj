@@ -8,4 +8,10 @@
     <ProjectReference Include="..\SolarCoffee.Data\SolarCoffee.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Customer" />
+    <Folder Include="Inventory" />
+    <Folder Include="Order" />
+  </ItemGroup>
+
 </Project>

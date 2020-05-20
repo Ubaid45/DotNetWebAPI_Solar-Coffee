@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using SolarCoffee.Data.Models;
 using SolarCoffee.Services.Product;
 using System.Net.Http;
+using SolarCoffee.Web.Serialization;
 
 namespace SolarCoffee.Web.Controllers
 {
@@ -25,9 +26,10 @@ namespace SolarCoffee.Web.Controllers
         /// <returns></returns>
         [HttpGet("/api/products")]
         public ActionResult GetProduct() {
-            _logger.LogInformation("Getting all products");
             var products = _productService.GetAllProducts();
-            return Ok(products);
+            var productViewModels = products
+                .Select(ProductMapper.SerializeProductModel);
+            return Ok(productViewModels);
         }
     }
 }

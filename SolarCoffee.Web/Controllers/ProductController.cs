@@ -1,12 +1,14 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SolarCoffee.Data.Models;
 using SolarCoffee.Services.Product;
+using System.Net.Http;
 
 namespace SolarCoffee.Web.Controllers
 {
     [ApiController]
-    public class ProductController
+    public class ProductController : ControllerBase
     {
         private readonly ILogger<ProductController> _logger;
         private readonly IProductService _productService;
@@ -21,11 +23,11 @@ namespace SolarCoffee.Web.Controllers
         /// Returns all products
         /// </summary>
         /// <returns></returns>
-        [HttpGet("/api/product")]
+        [HttpGet("/api/products")]
         public ActionResult GetProduct() {
             _logger.LogInformation("Getting all products");
             var products = _productService.GetAllProducts();
-            return new OkResult();
+            return Ok(products);
         }
     }
 }

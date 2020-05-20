@@ -46,7 +46,7 @@ namespace SolarCoffee.Services.Product {
                 };
 
                 _db.ProductInventories.Add(newInventory);
-                 
+                
                 _db.SaveChanges();
                 
                 return new ServiceResponse<Data.Models.Product> {

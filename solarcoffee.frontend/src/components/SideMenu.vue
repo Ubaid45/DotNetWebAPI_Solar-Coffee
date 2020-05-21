@@ -1,5 +1,9 @@
 <template>
-  <div class="side-menu-container"></div>
+  <div class="side-menu-container">
+    <router-link to="/">
+      <img id="imgLogo" alt="Solar Coffee logo" src="../assets/images/solar_coffee_logo.png" />
+    </router-link>
+  </div>
 </template>
 
 
@@ -25,5 +29,13 @@ export default class SideMenu extends Vue {}
   padding: 0.8rem;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
   box-sizing: border-box;
+}
+#imgLogo {
+  width: 100%;
+}
+
+h1 {
+  font-size: 1.2rem;
+  margin: 1rem 0;
 }
 </style>

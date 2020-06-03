@@ -1,11 +1,17 @@
 <template>
   <div class="inventory-container">
-    <h1 id="inventoryTitle">Inventory Dashboard</h1>
+    <h1 id="inventoryTitle">
+      Inventory Dashboard
+    </h1>
     <hr />
 
     <div class="inventory-actions">
-      <solar-button @button:click="showNewProductModal" id="addNewBtn">Add New Item</solar-button>
-      <solar-button @button:click="showShipmentModal" id="receiveShipmentBtn">Receive Shipment</solar-button>
+      <solar-button @button:click="showNewProductModal" id="addNewBtn">
+        Add New Item
+      </solar-button>
+      <solar-button @button:click="showShipmentModal" id="receiveShipmentBtn">
+        Receive Shipment
+      </solar-button>
     </div>
 
     <table id="inventoryTable" class="table">
@@ -18,19 +24,32 @@
       </tr>
 
       <tr v-for="item in inventory" :key="item.id">
-        <td>{{ item.product.name }}</td>
+        <td>
+          {{ item.product.name }}
+        </td>
         <td
           v-bind:class="
             `${applyColor(item.quantityOnHand, item.idealQuantity)}`
           "
-        >{{ item.quantityOnHand }}</td>
-        <td>{{ item.product.price | price }}</td>
-        <td>
-          <span v-if="item.product.isTaxable">Yes</span>
-          <span v-else>No</span>
+        >
+          {{ item.quantityOnHand }}
         </td>
         <td>
-          <div class="lni-cross-circle product-archive" @click="archiveProduct(item.product.id)"></div>
+          {{ item.product.price | price }}
+        </td>
+        <td>
+          <span v-if="item.product.isTaxable">
+            Yes
+          </span>
+          <span v-else>
+            No
+          </span>
+        </td>
+        <td>
+          <div
+            class="lni-cross-circle product-archive"
+            @click="archiveProduct(item.product.id)"
+          ></div>
         </td>
       </tr>
     </table>
@@ -54,49 +73,22 @@
 import { Component, Vue } from "vue-property-decorator";
 import { IProduct, IProductInventory } from "@/types/Product";
 import { IShipment } from "@/types/Shipment";
+import { InventoryService } from "@/services/inventory-service";
 import SolarButton from "@/components/SolarButton.vue";
 import NewProductModal from "@/components/modals/NewProductModal.vue";
 import ShipmentModal from "@/components/modals/ShipmentModal.vue";
 
+const inventoryService = new InventoryService();
+
 @Component({
   name: "Inventory",
-  components: { SolarButton, NewProductModal, ShipmentModal }
+  components: { SolarButton, NewProductModal, ShipmentModal },
 })
 export default class Inventory extends Vue {
   isNewProductVisible: boolean = false;
   isShipmentVisible: boolean = false;
-  inventory: IProductInventory[] = [
-    {
-      id: 1,
-      product: {
-        id: 1,
-        name: "Some product",
-        description: "Good stuff",
-        price: 100,
-        createdOn: new Date(),
-        updatedOn: new Date(),
-        isTaxable: true,
-        isArchived: true
-      },
-      quantityOnHand: 100,
-      idealQuantity: 100
-    },
-    {
-      id: 2,
-      product: {
-        id: 2,
-        name: "Some other product",
-        description: "Good stuff",
-        price: 10,
-        createdOn: new Date(),
-        updatedOn: new Date(),
-        isTaxable: false,
-        isArchived: false
-      },
-      quantityOnHand: 10,
-      idealQuantity: 10
-    }
-  ];
+
+  inventory: IProductInventory[] = [];
 
   applyColor(current: number, target: number) {
     if (current <= 0) {
@@ -110,12 +102,32 @@ export default class Inventory extends Vue {
     return "green";
   }
 
+  closeModals() {
+    this.isShipmentVisible = false;
+    this.isNewProductVisible = false;
+  }
+
   showNewProductModal() {
     this.isNewProductVisible = true;
   }
 
   showShipmentModal() {
     this.isShipmentVisible = true;
+  }
+
+  async saveNewShipment(shipment: IShipment) {
+    await inventoryService.updateInventoryQuantity(shipment);
+    this.isShipmentVisible = false;
+    await this.initialize();
+  }
+
+  async initialize() {
+    this.inventory = await inventoryService.getInventory();
+    await this.$store.dispatch("assignSnapshots");
+  }
+
+  async created() {
+    await this.initialize();
   }
 }
 </script>

@@ -18,7 +18,7 @@ import { Prop } from "vue-property-decorator";
 
 @Component({
   name: "SolarButton",
-  components: { SolarButton }
+  components: {}
 })
 export default class SolarButton extends Vue {
   @Prop({ required: false, type: Boolean, default: false })

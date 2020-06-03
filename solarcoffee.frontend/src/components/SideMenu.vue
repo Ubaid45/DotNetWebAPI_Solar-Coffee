@@ -3,6 +3,8 @@
     <router-link to="/">
       <img id="imgLogo" alt="Solar Coffee logo" src="../assets/images/solar_coffee_logo.png" />
     </router-link>
+    <h1>Management Portal</h1>
+    <solar-button id="menuInventory" is-full-width @button:click="goToRoute('/inventory')">Inventory</solar-button>
   </div>
 </template>
 

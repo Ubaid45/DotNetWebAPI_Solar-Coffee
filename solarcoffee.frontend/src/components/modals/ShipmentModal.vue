@@ -14,7 +14,7 @@
         >{{ item.product.name }}</option>
       </select>
       <label for="qtyReceived">Quantity Received:</label>
-      <input type="number" id="qtyReceived" v-model.number="qtyReceived" />
+      <input type="number" id="qtyReceived" v-model="qtyReceived" />
     </template>
     <template v-slot:footer>
       <solar-button

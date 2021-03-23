@@ -20,8 +20,8 @@
         </li>
 
         <li>
-          <label for="productPrice">Price (USD)</label>
-          <input type="number" id="productPrice" v-model="newProduct.price" />
+          <label for="productPrice">Price (EUR)</label>
+          <input type="number" id="productPrice" v-model.number="newProduct.price" />
         </li>
       </ul>
     </template>

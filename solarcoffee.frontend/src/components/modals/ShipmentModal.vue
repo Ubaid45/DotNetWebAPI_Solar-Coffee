@@ -5,16 +5,16 @@
     <template v-slot:header>Receive Shipment</template>
     <template v-slot:body>
       <label for="product">Product Received:</label>
-      <select v-model="selectedProduct" class="shipmentItems" id="product">
+      <select v-model.number="selectedProductId" class="shipmentItems" id="product">
         <option disabled value>Please select one</option>
         <option
           v-for="item in inventory"
-          :value="item"
+          :value="item.product.id"
           :key="item.product.id"
         >{{ item.product.name }}</option>
       </select>
       <label for="qtyReceived">Quantity Received:</label>
-      <input type="number" id="qtyReceived" v-model="qtyReceived" />
+      <input type="number" id="qtyReceived" v-model.number="qtyReceived" />
     </template>
     <template v-slot:footer>
       <solar-button
@@ -42,26 +42,17 @@ export default class ShipmentModal extends Vue {
   @Prop({ required: true, type: Array as () => IProductInventory[] })
   inventory!: IProductInventory[];
 
-  selectedProduct: IProduct = {
-    createdOn: new Date(),
-    updatedOn: new Date(),
-    id: 0,
-    description: "",
-    isTaxable: false,
-    name: "",
-    price: 0,
-    isArchived: false
-  };
+  selectedProductId = 0;
 
-  qtyReceived: number = 0;
+  qtyReceived = 0;
 
   close() {
     this.$emit("close");
   }
 
   save() {
-    let shipment: IShipment = {
-      productId: this.selectedProduct.id,
+    const shipment: IShipment = {
+      productId: this.selectedProductId,
       adjustment: this.qtyReceived
     };
 

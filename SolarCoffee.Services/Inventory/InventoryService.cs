@@ -21,10 +21,11 @@ namespace SolarCoffee.Services.Inventory {
         /// </summary>
         /// <returns></returns>
         public List<ProductInventory> GetCurrentInventory() {
-            return _db.ProductInventories
+            var data = _db.ProductInventories
                 .Include(pi => pi.Product)
                 .Where(pi => !pi.Product.IsArchived)
                 .ToList();
+            return data;
         }
 
         /// <summary>

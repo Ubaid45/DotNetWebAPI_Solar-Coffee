@@ -42,7 +42,9 @@ namespace SolarCoffee.Services.Product {
                 var newInventory = new ProductInventory {
                     Product = product,
                     QuantityOnHand = 0,
-                    IdealQuantity = 10
+                    IdealQuantity = 10,
+                    CreatedOn = DateTime.Now,
+                    UpdatedOn = DateTime.Now
                 };
 
                 _db.ProductInventories.Add(newInventory);

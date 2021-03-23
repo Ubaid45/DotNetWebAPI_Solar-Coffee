@@ -11,7 +11,7 @@ namespace SolarCoffee.Data {
         protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
         {
             // TODO: This is messy, but needed for migrations.
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=solardev;Password=solar123;Database=solardev;");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Password=solar123;Database=solardev;");
             
         }
         public virtual DbSet<Customer> Customers { get; set; }
